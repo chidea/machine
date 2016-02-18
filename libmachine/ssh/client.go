@@ -307,7 +307,8 @@ func (client *NativeClient) Shell(args ...string) error {
 
 func NewExternalClient(sshBinaryPath, user, host string, port int, auth *Auth) (*ExternalClient, error) {
 	client := &ExternalClient{
-		BinaryPath: sshBinaryPath,
+		// wrap with " to get ready for cases when Path contains some spaces
+		BinaryPath: `"` + sshBinaryPath + `"`,
 	}
 
 	args := append(baseSSHArgs, fmt.Sprintf("%s@%s", user, host))
